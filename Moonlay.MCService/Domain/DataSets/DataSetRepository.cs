@@ -32,9 +32,56 @@ namespace Moonlay.MasterData.WebApi.Domain.DataSets
 
         }
 
-        public Task Create(DataSet model)
+        public async Task Create(DataSet model, IEnumerable<DataSetAttribute> attributes)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                var sql = $"CREATE TABLE IF NOT EXISTS {model.Name} (";
+
+                foreach (var attribute in attributes)
+                {
+                    sql += $"{attribute.Name} {attribute.Type},";
+                }
+
+                sql = sql.Remove(sql.Length - 1);
+                sql += ");";
+
+                _db.Connection.Open();
+                await _db.Connection.ExecuteAsync(sql);
+                _db.Connection.Close();
+            }
+            catch
+            {
+                Console.WriteLine("error");
+            }
+
+            
+
+            //var createCommand = _db.Connection.ExecuteAsync("CREATE TABLE @tableName (@columnName @dataType);",
+            //    new
+            //    {
+            //        tableName = model.Name,
+            //        columnName = attributes.Select(c => c.Name),
+            //        dataType = attributes.Select(c => c.Type)
+            //    });
+
+            //try
+            //{
+            //    await _db.Connection.ExecuteAsync("CREATE TABLE @tableName (@columnName @dataType);",
+            //    new
+            //    {
+            //        tableName = model.Name,
+            //        columnName = attributes.Select(c => c.Name),
+            //        dataType = attributes.Select(c => c.Type)
+            //    });
+            //}
+            //catch (Exception e)
+            //{
+            //    throw e;
+            //}
+
+            //return ExecuteAsync.Task.FromResult(sql);
         }
 
         public Task Delete(string name)

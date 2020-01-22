@@ -4,8 +4,10 @@ using Moonlay.Confluent.Kafka;
 using Moonlay.Core.Models;
 using Moonlay.WebApp.Clients;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Moonlay.WebApp
 {
@@ -13,6 +15,16 @@ namespace Moonlay.WebApp
     {
         public class NewDataSetForm
         {
+            public class AttributeArg
+            {
+                public string Name { get; set; }
+                public string Type { get; set; }
+                public string Value { get;  set; }
+                public string PrimaryKey { get;  set; }
+                public string AutoIncrement { get;  set; }
+                public string Null { get;  set; }
+            }
+
             [Required]
             [MaxLength(64)]
             [Display(Name="Domain")]
@@ -26,6 +38,8 @@ namespace Moonlay.WebApp
             [MaxLength(64)]
             [Display(Name = "Organization")]
             public string OrgName { get; set; }
+
+            public List<AttributeArg> AttributeArgs { get; set; } = new List<AttributeArg>();
         }
 
         private readonly IKafkaProducer _producer;
@@ -53,7 +67,25 @@ namespace Moonlay.WebApp
                 return Page();
             }
 
-            var reply = await _dataSetClient.NewDatasetAsync(new MasterData.Protos.NewDatasetReq { Name = Form.Name, DomainName = Form.DomainName, OrganizationName = Form.OrgName });
+            var request = new MasterData.Protos.NewDatasetReq
+            {
+                Name = Form.Name,
+                DomainName = Form.DomainName,
+                OrganizationName = Form.OrgName,
+            };
+
+            Form.AttributeArgs.ForEach(o => request.Attribute.Add(new MasterData.Protos.AttributeARG
+            {
+                Name = o.Name,
+                Type = o.Type,
+                Value = o.Value,
+                Primarykey = o.PrimaryKey,
+                Autoincrement = o.AutoIncrement,
+                Null = o.Null
+            }
+            ));
+
+            var reply = await _dataSetClient.NewDatasetAsync(request);
 
             return RedirectToPage("./Index");
         }

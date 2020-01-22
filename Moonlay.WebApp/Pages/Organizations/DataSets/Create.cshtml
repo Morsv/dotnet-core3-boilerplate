@@ -6,32 +6,82 @@
 
 <h1>Create</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Form.Name" class="control-label"></label>
-                <input asp-for="Form.Name" class="form-control" />
-                <span asp-validation-for="Form.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Form.DomainName" class="control-label"></label>
-                <input asp-for="Form.DomainName" class="form-control" />
-                <span asp-validation-for="Form.DomainName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Form.OrgName" class="control-label"></label>
-                <input asp-for="Form.OrgName" class="form-control" />
-                <span asp-validation-for="Form.OrgName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-inline">
+                                    <label asp-for="Form.Name" class="control-label"></label> : &nbsp;
+                                    <input asp-for="Form.Name" class="form-control" />
+                                    <span asp-validation-for="Form.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-inline">
+                                    <label asp-for="Form.DomainName" class="control-label"></label> : &nbsp;
+                                    <input asp-for="Form.DomainName" class="form-control" />
+                                    <span asp-validation-for="Form.DomainName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-inline">
+                                    <label asp-for="Form.OrgName" class="control-label"></label> : &nbsp;
+                                    <input asp-for="Form.OrgName" class="form-control" />
+                                    <span asp-validation-for="Form.OrgName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Length/Values</th>
+                                <th>PK</th>
+                                <th>AI</th>
+                                <th>Null</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input asp-for="Form.AttributeArgs[0].Name" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="Form.AttributeArgs[0].Type" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].Type" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="Form.AttributeArgs[0].Value" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].Value" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].PrimaryKey" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].PrimaryKey" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].AutoIncrement" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].AutoIncrement" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].Null" class="form-control" />
+                                    <span asp-validation-for="Form.AttributeArgs[0].Null" class="text-danger"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <div>
     <a asp-page="Index">Back to List</a>

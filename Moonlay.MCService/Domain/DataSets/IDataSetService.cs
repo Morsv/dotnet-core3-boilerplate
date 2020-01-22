@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Moonlay.MasterData.WebApi.Domain.DataSets
 {
@@ -28,6 +29,7 @@ namespace Moonlay.MasterData.WebApi.Domain.DataSets
             }
 
             if (string.IsNullOrEmpty(domainName))
+            
             {
                 throw new ArgumentException("message", nameof(domainName));
             }
@@ -37,7 +39,18 @@ namespace Moonlay.MasterData.WebApi.Domain.DataSets
                 throw new ArgumentException("message", nameof(orgName));
             }
 
-            await _dataSetRepository.Create(new DataSet { Description = "", Name = name, DomainName = domainName });
+            //await _dataSetRepository.Create(new DataSet { Description = "", Name = name, DomainName = domainName }, attributes);
+
+            await _dataSetRepository.Create(new DataSet { Description = "", Name = name, DomainName = domainName }, attributes.Select(o => new DataSetAttribute
+            {
+                Name = o.Name,
+                Type = o.Type,
+                Value = o.Value,
+                PrimaryKey = o.PrimaryKey,
+                AutoIncrement = o.AutoIncrement,
+                Null = o.Null
+
+            }));
         }
 
         public Task Remove(string name)

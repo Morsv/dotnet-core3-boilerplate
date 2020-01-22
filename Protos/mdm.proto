@@ -32,6 +32,16 @@ message NewDatasetReq {
   string name = 1;
   string domainName = 2;
   string organizationName = 3;
+  repeated AttributeARG attribute = 4;
+}
+
+message AttributeARG{
+	string name = 1;
+	string type = 2;
+	string value = 3;
+	string primarykey = 4;
+	string autoincrement = 5;
+	string null = 6;
 }
 
 message RemoveDataSetReq {
