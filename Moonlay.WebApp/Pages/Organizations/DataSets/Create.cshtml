@@ -6,11 +6,10 @@
 
 <h1>Create</h1>
 <hr />
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <form method="post">
+            <form method="post" id="formDataset">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -24,7 +23,7 @@
                             <div class="col-md-4">
                                 <div class="form-group form-inline">
                                     <label asp-for="Form.DomainName" class="control-label"></label> : &nbsp;
-                                    <input asp-for="Form.DomainName" class="form-control" />
+                                    <input asp-for="Form.DomainName" class="form-control" value="dbo" readonly />
                                     <span asp-validation-for="Form.DomainName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -36,41 +35,82 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Length/Values</th>
-                                <th>PK</th>
-                                <th>AI</th>
-                                <th>Null</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input asp-for="Form.AttributeArgs[0].Name" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].Name" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="Form.AttributeArgs[0].Type" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].Type" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="Form.AttributeArgs[0].Value" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].Value" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].PrimaryKey" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].PrimaryKey" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].AutoIncrement" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].AutoIncrement" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input type="checkbox" asp-for="Form.AttributeArgs[0].Null" class="form-control" />
-                                    <span asp-validation-for="Form.AttributeArgs[0].Null" class="text-danger"></span>
-                                </td>
-                            </tr>
+                        <button id="addRow" type="button" class="btn btn-primary">Add</button>
+                        <table id="createDatasetTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Length/Values</th>
+                                    <th>PK</th>
+                                    <th>Allow Nulls</th>
+                                </tr>
+                            </thead>
+                            @{int i = 0;
+                                    <tr id="tablerow0">
+                                        <td>
+                                            <input type="text" asp-for="Form.AttributeArgs[i].Name" class="form-control" value="" />
+                                            <span asp-validation-for="Form.AttributeArgs[i].Name" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <select asp-for="Form.AttributeArgs[i].Type" class="form-control">
+                                                <option value="int">Int</option>
+                                                <option value="varchar">Varchar</option>
+                                                <option value="bool">Bool</option>
+                                                <option value="datetime">DateTime</option>
+                                                <option value="timestamp">Timestamp</option>
+                                            </select>
+                                            <span asp-validation-for="Form.AttributeArgs[i].Type" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <input type="text" asp-for="Form.AttributeArgs[i].Value" class="form-control" value="" />
+                                            <span asp-validation-for="Form.AttributeArgs[i].Value" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" asp-for="Form.AttributeArgs[i].PrimaryKey" class="form-control"/>
+                                            <span asp-validation-for="Form.AttributeArgs[i].PrimaryKey" class="text-danger" value="PRIMARY KEY"></span>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" asp-for="Form.AttributeArgs[i].Null" class="form-control" />
+                                            <span asp-validation-for="Form.AttributeArgs[i].Null" class="text-danger"></span>
+                                        </td>
+                                    </tr>
+
+                            }
+
+                            @*<tr id="tablerow0">
+            <td>
+                <input type="text" asp-for="Form.AttributeArgs[0].Name" class="form-control" value="" />
+                <span asp-validation-for="Form.AttributeArgs[0].Name" class="text-danger"></span>
+            </td>
+            <td>
+                <select asp-for="Form.AttributeArgs[0].Type" class="form-control">
+                    <option value="int">Int</option>
+                    <option value="varchar">Varchar</option>
+                    <option value="bool">Bool</option>
+                    <option value="datetime">DateTime</option>
+                    <option value="timestamp">Timestamp</option>
+                </select>
+                <span asp-validation-for="Form.AttributeArgs[0].Type" class="text-danger"></span>
+            </td>
+            <td>
+                <input type="text" asp-for="Form.AttributeArgs[0].Value" class="form-control" value="" />
+                <span asp-validation-for="Form.AttributeArgs[0].Value" class="text-danger"></span>
+            </td>
+            <td>
+                <input type="checkbox" asp-for="Form.AttributeArgs[0].PrimaryKey" class="form-control" value="PRIMARY KEY" />
+                <span asp-validation-for="Form.AttributeArgs[0].PrimaryKey" class="text-danger"></span>
+            </td>
+            <td>
+                <input type="checkbox" asp-for="Form.AttributeArgs[0].AutoIncrement" class="form-control" value="AUTO_INCREMENT" />
+                <span asp-validation-for="Form.AttributeArgs[0].AutoIncrement" class="text-danger"></span>
+            </td>
+            <td>
+                <input type="checkbox" asp-for="Form.AttributeArgs[0].Null" class="form-control" value="NOT NULL" />
+                <span asp-validation-for="Form.AttributeArgs[0].Null" class="text-danger"></span>
+            </td>
+        </tr>*@
+
                         </table>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary btn-block" />
@@ -86,6 +126,67 @@
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+    //var i = $("[id$='__ID']").length.toString();
+    var i = 1;
+        $(function () {
+            $('#addRow').click(function () {
+                $('<tr id="tablerow' + i + '"><td>' +
+                    '<input type="text" class="form-control" id="Form_AttributeArgs_' + i + '__Name" name="Form.AttributeArgs[' + i + '].Name" />' +
+                    '<span class="text-danger field-validation-valid" data-valmsg-for="Form.AttributeArgs[' + i + '].Name" data-valmsg-replace="true"></span>'+
+                    '</td>' +
+                    '<td>' +
+                    '<select id="Form_AttributeArgs_' + i + '__Type" name="Form.AttributeArgs[' + i + '].Type" class="form-control">' +
+                    '<option value="int">Int</option>' +
+                    '<option value="varchar">Varchar</option>' +
+                    '<option value="bool">Bool</option>' +
+                    '<option value="datetime">DateTime</option>' +
+                    '<option value="timestamp">Timestamp</option>' +
+                    '</select>' +
+                    '<span class="text-danger field-validation-valid" data-valmsg-for="Form.AttributeArgs[' + i + '].Type" data-valmsg-replace="true"></span>'+
+                    '</td>' +
+                    '<td>' +
+                    '<input type="text" id="Form_AttributeArgs_' + i + '__Value" class="form-control" name="Form.AttributeArgs[' + i + '].Value" />' +
+                    '<span class="text-danger field-validation-valid" data-valmsg-for="Form.AttributeArgs[' + i + '].Value" data-valmsg-replace="true"></span>'+
+                    '</td>' +
+                    '<td>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type="checkbox" id="Form_AttributeArgs_' + i + '__Null" name="Form.AttributeArgs[' + i + '].Null" class="form-control" value="NOT NULL" />' +
+                    '<span class="text-danger field-validation-valid" data-valmsg-for="Form.AttributeArgs[' + i + '].Null" data-valmsg-replace="true"></span>'+
+                    '</td>' +
+                    '<input name="Form.AttributeArgs[' + i + '].Null" type="hidden" value="NOT NULL"/>' +
+                    '</tr>').appendTo('#createDatasetTable');
+                i++;
+               return false;
+            });
+        });
+        function removeTr(index) {
+            if (i > 1) {
+                $('#tablerow' + index).remove();
+                i--;
+            }
+            return false;
+        }
+    //$("#addRow").click(function () {
+    //$("#createDatasetTable").each(function () {
+    //    var tds = '<tr>';
+    //    jQuery.each($('tr:last td', this), function () {
+    //        tds += '<td>' + $(this).html() + '</td>';
+    //    });
+    //    tds += '</tr>';
+    //    if ($('tbody', this).length > 0) {
+    //        $('tbody', this).append(tds);
+    //    } else {
+    //        $(this).append(tds);
+    //    }
+    //});
+    //});
+
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

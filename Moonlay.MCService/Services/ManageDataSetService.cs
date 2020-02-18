@@ -28,9 +28,9 @@ namespace Moonlay.MasterData.WebApi.Services
                 Type = c.Type,
                 Value = c.Value,
                 PrimaryKey = c.Primarykey,
-                AutoIncrement = c.Autoincrement,
                 Null = c.Null
             }));
+
 
             return new Reply
             {

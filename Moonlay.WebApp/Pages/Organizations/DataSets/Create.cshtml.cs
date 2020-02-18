@@ -21,7 +21,6 @@ namespace Moonlay.WebApp
                 public string Type { get; set; }
                 public string Value { get;  set; }
                 public string PrimaryKey { get;  set; }
-                public string AutoIncrement { get;  set; }
                 public string Null { get;  set; }
             }
 
@@ -80,10 +79,9 @@ namespace Moonlay.WebApp
                 Type = o.Type,
                 Value = o.Value,
                 Primarykey = o.PrimaryKey,
-                Autoincrement = o.AutoIncrement,
                 Null = o.Null
             }
-            ));
+            )); 
 
             var reply = await _dataSetClient.NewDatasetAsync(request);
 

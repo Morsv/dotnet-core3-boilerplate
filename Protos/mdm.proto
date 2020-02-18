@@ -14,6 +14,7 @@ service ManageDataSet {
   // New dataset
   rpc NewDataset (NewDatasetReq) returns (Reply);
   rpc RemoveDataSet (RemoveDataSetReq) returns (Reply);
+  rpc GetAllDataset (GetAllDatasetReq) returns (Reply);
 }
 
 // The response message containing the greetings.
@@ -25,6 +26,12 @@ message Reply {
 // The request message containing the user's name.
 message NewOrganizationReq {
   string name = 1;
+}
+
+message GetAllDatasetReq{
+	string name = 1;
+	string domainName = 2;
+	string organizationName = 3;
 }
 
 // Command for create a dataset
@@ -40,8 +47,7 @@ message AttributeARG{
 	string type = 2;
 	string value = 3;
 	string primarykey = 4;
-	string autoincrement = 5;
-	string null = 6;
+	string null = 5;
 }
 
 message RemoveDataSetReq {

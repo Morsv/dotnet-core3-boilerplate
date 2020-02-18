@@ -47,7 +47,6 @@ namespace Moonlay.MasterData.WebApi.Domain.DataSets
                 Type = o.Type,
                 Value = o.Value,
                 PrimaryKey = o.PrimaryKey,
-                AutoIncrement = o.AutoIncrement,
                 Null = o.Null
 
             }));
